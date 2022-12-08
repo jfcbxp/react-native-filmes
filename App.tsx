@@ -8,11 +8,14 @@ import {
   View,
 } from "react-native";
 import Filmes from "./src/components/Filmes";
+import { Filme } from "./src/models/Filme";
 import { carregarFilmes } from "./src/services/api";
 export default function App() {
-  const [filmes, setFilmes] = useState<any[]>();
-  const renderItem: ListRenderItem<any> = ({ item }) => <Filmes data={item} />;
-  const keyItem: (item: any) => string = (item: any) => item.id.toString();
+  const [filmes, setFilmes] = useState<Filme[]>();
+  const renderItem: ListRenderItem<Filme> = ({ item }) => (
+    <Filmes data={item} />
+  );
+  const keyItem: (item: Filme) => string = (item: Filme) => item.id.toString();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

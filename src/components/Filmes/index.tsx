@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { SwipeButton } from "@arelstone/react-native-swipe-button";
+import { Filme } from "../../models/Filme";
 
 interface Props {
-  data: any;
+  data: Filme;
 }
 
 const Filmes = (props: Props) => {

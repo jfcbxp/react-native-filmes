@@ -19,15 +19,17 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    carregarFilmes().then((response) => {
-      setFilmes(response);
-      setLoading(false);
-    });
+    carregarFilmes()
+      .then((response) => {
+        setFilmes(response);
+        setLoading(false);
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   if (loading) {
     return (
-      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+      <View style={styles.loading}>
         <ActivityIndicator color="#09A6FF" size={100} />
       </View>
     );
@@ -53,4 +55,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   filmes: {},
+  loading: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
 });

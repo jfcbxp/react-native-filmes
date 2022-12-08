@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, Animated } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SwipeButton } from "@arelstone/react-native-swipe-button";
 import { Filme } from "../../models/Filme";
 
@@ -8,11 +8,36 @@ interface Props {
 }
 
 const Filmes = (props: Props) => {
+  const [animatedHeightCapa] = useState(new Animated.Value(0));
+
+  const iniciarAnimacao = () => {
+    Animated.sequence([
+      Animated.timing(animatedHeightCapa, {
+        toValue: 500,
+        duration: 3000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(animatedHeightCapa, {
+        toValue: 200,
+        duration: 3000,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+  //Animated.parallel([]);
+  //Animated.loop(Animated.sequence([]));
+  useEffect(() => {
+    iniciarAnimacao();
+  }, []);
+
   return (
     <View>
       <View style={styles.card}>
         <Text style={styles.titulo}>{props.data.nome}</Text>
-        <Image source={{ uri: props.data.foto }} style={styles.capa} />
+        <Animated.Image
+          source={{ uri: props.data.foto }}
+          style={{ height: animatedHeightCapa }}
+        />
         <View style={styles.areaBotao}>
           <SwipeButton
             containerStyle={styles.swipeButtonContainer}
@@ -42,10 +67,6 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 18,
     padding: 15,
-  },
-  capa: {
-    height: 250,
-    zIndex: 1,
   },
   areaBotao: {
     alignItems: "flex-end",
